@@ -17,6 +17,39 @@ public class BookRepository {
         return this.bookList;
     }
 
+    public BookRepository(){
+        this.bookList.add(new Book(
+                1l,
+                "abc",
+                "libro 1",
+                "libro 1",
+                "springer",
+                1,
+                "persona 1"
+                )
+        );
+        this.bookList.add(new Book(
+                        2l,
+                        "qwe",
+                        "libro 1",
+                        "libro 1",
+                        "springer",
+                        1,
+                        "persona 2"
+                )
+        );
+        this.bookList.add(new Book(
+                        3l,
+                        "zxc",
+                        "libro 1",
+                        "libro 1",
+                        "springer",
+                        1,
+                        "persona 1"
+                )
+        );
+    }
+
     public Book findById(Long id){
         for(Book book : this.bookList){
             if(Objects.equals(book.getId(), id)){
@@ -71,6 +104,16 @@ public class BookRepository {
     public void deleteById(Long id){
         Book book = this.findById(id);
         this.bookList.remove(book);
+    }
+
+    public List<Book> findByAuthor(String author){
+        List<Book> filterAuthor = new ArrayList<>();
+        for (Book book : this.bookList){
+            if(book.getAuthor().equals(author)){
+                filterAuthor.add(book);
+            }
+        }
+        return filterAuthor;
     }
 
 

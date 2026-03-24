@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/books")
@@ -38,6 +39,19 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 this.bookService.save(book)
         );
+    }
+
+    @GetMapping("/total")
+    public ResponseEntity<Map<String, Integer>> getTotal(){
+        return ResponseEntity.status(HttpStatus.OK).body(this.bookService.count());
+    }
+
+    @GetMapping("/author/{author}")
+    public ResponseEntity<List<Map<String,String>>>
+    getByAuthor(@PathVariable String author){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(this.bookService.getBookByAuthor(author));
     }
 
 }
