@@ -1,6 +1,7 @@
 package com.duoc.biblioteca.controllers;
 
 import com.duoc.biblioteca.models.Book;
+import com.duoc.biblioteca.models.BookDTO;
 import com.duoc.biblioteca.services.BookService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/books")
@@ -38,6 +40,28 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 this.bookService.save(book)
         );
+    }
+
+    @GetMapping("/total")
+    public ResponseEntity<Map<String,Integer>> getTotal(){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(this.bookService.getTotal());
+    }
+
+    @GetMapping("/author/{author}")
+    public ResponseEntity<List<Map<String,String>>>
+        getByAuthor(@PathVariable String author){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(this.bookService.getByAuthorMap(author));
+    }
+    @GetMapping("/author/dto/{author}")
+    public ResponseEntity<List<BookDTO>>
+        getByAuthorDTO(@PathVariable String author){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(this.bookService.getByAuthorDTO(author));
     }
 
 }
